@@ -29,6 +29,11 @@ public class Bank {
         /*
          * Implement this function
          */
+      if(bankAccount.getBalance() < amount || amount < 0) {
+        return false;
+      }
+      bankAccount.setBalance(bankAccount.getBalance() - amount);
+      return true;
     }
 
     /**
@@ -45,6 +50,9 @@ public class Bank {
         /*
          * Implement this function
          */
+      if(amount < 0) return false;
+      bankAccount.setBalance(bankAccount.getBalance()+amount);
+      return true;
     }
 
     /**
@@ -64,6 +72,12 @@ public class Bank {
         /*
          * Implement this function
          */
+      if(source == null || destination == null || amount < 0
+          || source.getBalance() < amount){
+        return false;
+      }
+      return withdrawMoney(source, amount)
+        && depositMoney(destination, amount);
     }
 
     /**
@@ -77,6 +91,7 @@ public class Bank {
         /*
          * Implement this function
          */
+      bankAccount.setName(name);
     }
 
     public static int totalAccounts = 0;
@@ -89,6 +104,7 @@ public class Bank {
         /*
          * Implement this function
          */
+      return totalAccounts;
     }
 
     /**
@@ -110,14 +126,23 @@ public class Bank {
         System.out.println("Bank account for Johy Ive created\n\n");
 
         // Deposit money to both accounts and print new balance
+        System.out.println("Acct1 depositing 1000");
+        System.out.println("Acct2 depositing 5000");
         bank.depositMoney(account1, 1000.0);
         bank.depositMoney(account2, 5000.0);
+        System.out.println("Acct1 "+account1.getBalance());
+        System.out.println("Acct2 "+account2.getBalance());
 
         // Withdraw money from Account 2 and print new balance
+        System.out.println("Acct2 withdrawing 200");
         bank.withdrawMoney(account2, 200.0);
+        System.out.println("Acct2 bal "+account2.getBalance());
 
         // Transfer money from Account 2 to Account 1 and print new balances
+        System.out.println("Transfer from A2 to A1 350");
         bank.transferMoney(account2, account1, 350.0);
+        System.out.println("Acct1 "+account1.getBalance());
+        System.out.println("Acct2 "+account2.getBalance());
 
         // Print number of accounts
         System.out.print("Number of active accounts at " + bank.bankName + " are ");
